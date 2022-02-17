@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen_0dp">0dp</dimen>
+
+    <dimen name="margin_settings_heading_linear_layout">10dp</dimen>
+    <dimen name="margin_settings_text_heading">20dp</dimen>
+    <dimen name="settings_radioGroup_margin">16dp</dimen>
+    <dimen name="setting_seekBar_margin">16dp</dimen>
+    <dimen name="settings_colorCode_layout_margin">16dp</dimen>
+    <dimen name="divider_margin">5dp</dimen>
+    <dimen name="divider_thickness">2dp</dimen>
+
+    <dimen name="elevation_fab">10dp</dimen>
+    <dimen name="margin_fab">20dp</dimen>
+    <dimen name="margin_full_img">10dp</dimen>
+
+    <dimen name="margin_noImage_text">30dp</dimen>
+
+    <dimen name="grid_image_height">110dp</dimen>
+    <dimen name="margin_grid">5dp</dimen>
+    <dimen name="grid_margin_cardView">3dp</dimen>
+    <dimen name="grid_padding_cardView">3dp</dimen>
+    <dimen name="grid_elevation_cardView">8dp</dimen>
+
+    <dimen name="settings_text_size_menu_heading">18sp</dimen>
+    <dimen name="settings_text_size_colorLetter">18sp</dimen>
+    <dimen name="noImage_textSize">18sp</dimen>
+</resources>

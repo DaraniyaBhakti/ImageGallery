@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.FullImageActivity">
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/previousFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_fab"
+        android:clickable="true"
+        android:focusable="true"
+        app:elevation="@dimen/elevation_fab"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="start|bottom"
+        android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
+        android:contentDescription="@string/previous_button_description" />
+
+    <ImageView
+        android:id="@+id/fullImageViewId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:layout_margin="@dimen/margin_full_img"
+        android:contentDescription="@string/full_image_description" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nextFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_fab"
+        android:clickable="true"
+        android:focusable="true"
+        app:elevation="@dimen/elevation_fab"
+        app:fabSize="mini"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+        android:contentDescription="@string/next_button_description" />
+
+</FrameLayout>

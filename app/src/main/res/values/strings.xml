@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">TatvasoftAssignment9</string>
+
+    <string name="no_folder_selected_text_view">\"No folder selected! Select folder from settings menu to view images. \"</string>
+    <string name="toast_allow_media_access">Allow access to media</string>
+    <string name="previous_button_description">Previous button</string>
+    <string name="full_image_description">Full Image Description</string>
+    <string name="next_button_description">Next Button Description</string>
+    <string name="grid_image_view">Grid Image View</string>
+    <string name="select_colors_for_theme">Select colors for theme</string>
+    <string name="arrow_for_color">arrow for color</string>
+    <string name="action_bar">Action bar</string>
+    <string name="status_bar">Status Bar</string>
+    <string name="r">R</string>
+    <string name="g">G</string>
+    <string name="b">B</string>
+    <string name="select_folder_to_view_images">Select folder to view images</string>
+    <string name="arrow_for_folder">arrow for folder</string>
+    <string name="loading_progressDialog">Loading</string>
+    <string name="pleaseWait_progressDialog">Please wait....</string>
+    <string name="noImageFolderText">No Image in this %s folder! Select another folder from settings menu.</string>
+    <string name="settings">Settings</string>
+    <string name="gallery">Gallery</string>
+
+</resources>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.SettingFragment">
+    <LinearLayout
+        android:id="@+id/selectColorLinearLayout"
+        style="@style/settingsHeadingLinearLayout">
+
+        <TextView
+            android:id="@+id/tvSelectColor"
+            android:text="@string/select_colors_for_theme"
+            style="@style/settingMenu" />
+
+        <ImageView
+            android:id="@+id/colorLayoutArrow"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+            style="@style/settingArrow"
+            android:contentDescription="@string/arrow_for_color" />
+
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            app:dividerThickness="@dimen/divider_thickness"
+            style="@style/settings_divider" />
+
+        <LinearLayout
+            android:id="@+id/colorSelectorLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_margin="@dimen/settings_radioGroup_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:text="@string/action_bar"
+                    android:id="@+id/rbActionBar"
+                    style="@style/setting_radioBtn" />
+                <RadioButton
+                    android:text="@string/status_bar"
+                    android:id="@+id/rbStatusBar"
+                    style="@style/setting_radioBtn"/>
+            </RadioGroup>
+
+            <SeekBar
+                android:id="@+id/seekBarRed"
+                style="@style/settings_seekBar"
+                android:theme="@style/seekBarRed"/>
+            <SeekBar
+                android:id="@+id/seekBarGreen"
+                style="@style/settings_seekBar"
+                android:theme="@style/seekBarGreen"
+                />
+            <SeekBar
+                android:id="@+id/seekBarBlue"
+                style="@style/settings_seekBar"
+                android:theme="@style/seekBarBlue"/>
+
+            <LinearLayout
+                android:layout_margin="@dimen/settings_colorCode_layout_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/r"
+                    style="@style/settings_color_letter_text" />
+                <TextView
+                    android:id="@+id/textR"
+                    style="@style/settings_color_code_text" />
+                <TextView
+                    android:text="@string/g"
+                    style="@style/settings_color_letter_text"/>
+                <TextView
+                    android:id="@+id/textG"
+                    style="@style/settings_color_code_text"/>
+                <TextView
+                    android:text="@string/b"
+                    style="@style/settings_color_letter_text"/>
+                <TextView
+                    android:id="@+id/textB"
+                    style="@style/settings_color_code_text"/>
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                style="@style/settings_divider"
+                app:dividerThickness="@dimen/divider_thickness"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/selectFolderLinearLayout"
+            style="@style/settingsHeadingLinearLayout">
+
+            <TextView
+                android:id="@+id/tvImgPath"
+                android:text="@string/select_folder_to_view_images"
+                style="@style/settingMenu" />
+
+            <ImageView
+                android:id="@+id/imageLayoutArrow"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                style="@style/settingArrow"
+                android:contentDescription="@string/arrow_for_folder" />
+
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            style="@style/settings_divider"
+            app:dividerThickness="@dimen/divider_thickness"
+            />
+
+        <LinearLayout
+            android:id="@+id/imageFileListLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/imageFileListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                />
+
+            <com.google.android.material.divider.MaterialDivider
+                style="@style/settings_divider"
+                app:dividerThickness="@dimen/divider_thickness"
+                />
+
+        </LinearLayout>
+</LinearLayout>

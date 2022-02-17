@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="settingMenu">
+        <item name="android:layout_width">@dimen/dimen_0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/settings_text_size_menu_heading</item>
+        <item name="android:layout_margin">@dimen/margin_settings_text_heading</item>
+    </style>
+
+    <style name="PopupMenuStyle" parent="Theme.AppCompat.Light">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="seekBarRed" parent="Widget.AppCompat.SeekBar">
+        <item name="colorAccent">@color/red</item>
+    </style>
+    <style name="seekBarGreen" parent="Widget.AppCompat.SeekBar">
+        <item name="colorAccent">@color/green</item>
+    </style>
+    <style name="seekBarBlue" parent="Widget.AppCompat.SeekBar">
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <style name="settingsHeadingLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/background</item>
+        <item name="android:layout_margin">@dimen/margin_settings_heading_linear_layout</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="settingArrow">
+        <item name="android:layout_width">@dimen/dimen_0dp</item>
+        <item name="android:layout_weight">0.2</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:contentDescription">@string/arrow_for_color</item>
+    </style>
+
+    <style name="settings_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/divider_margin</item>
+    </style>
+
+    <style name="setting_radioBtn">
+        <item name="android:layout_width">@dimen/dimen_0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="settings_seekBar">
+        <item name="android:layout_margin">@dimen/setting_seekBar_margin</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:max">255</item>
+    </style>
+
+    <style name="settings_color_letter_text">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/settings_text_size_colorLetter</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="settings_color_code_text">
+        <item name="android:gravity">start</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+</resources>
