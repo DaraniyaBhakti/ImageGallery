@@ -1,7 +1,10 @@
 package com.tatvasoft.tatvasoftassignment9.Fragment;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -13,12 +16,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tatvasoft.tatvasoftassignment9.Activity.MainActivity;
@@ -26,8 +30,10 @@ import com.tatvasoft.tatvasoftassignment9.R;
 import com.tatvasoft.tatvasoftassignment9.Utils.Constant;
 import com.tatvasoft.tatvasoftassignment9.databinding.FragmentSettingBinding;
 
-public class SettingFragment extends Fragment {
+import java.util.Objects;
 
+public class SettingFragment extends Fragment {
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     SharedPreferences colorSharedPreference;
     SharedPreferences.Editor colorEditor;
@@ -53,7 +59,27 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentSettingBinding.inflate(inflater,container,false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.settings);
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(R.string.settings);
+
+        binding.selectColorLinearLayout.setOnClickListener(v -> {
+            if(binding.colorSelectorLinearLayout.getVisibility() == View.GONE){
+                binding.colorSelectorLinearLayout.setVisibility(View.VISIBLE);
+                binding.colorLayoutArrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+            }else if(binding.colorSelectorLinearLayout.getVisibility() == View.VISIBLE){
+                binding.colorSelectorLinearLayout.setVisibility(View.GONE);
+                binding.colorLayoutArrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+            }
+        });
+        setColor();
+
+        binding.selectFolderLinearLayout.setOnClickListener(v -> CheckUserPermissions());
+
+        return binding.getRoot();
+
+    }
+
+    public void selectFolder()
+    {
         arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice
                 , fileListArray);
         binding.imageFileListView.setAdapter(arrayAdapter);
@@ -67,20 +93,48 @@ public class SettingFragment extends Fragment {
                 binding.imageLayoutArrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
+    }
 
-        binding.selectColorLinearLayout.setOnClickListener(v -> {
-            if(binding.colorSelectorLinearLayout.getVisibility() == View.GONE){
-                binding.colorSelectorLinearLayout.setVisibility(View.VISIBLE);
-                binding.colorLayoutArrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
-            }else if(binding.colorSelectorLinearLayout.getVisibility() == View.VISIBLE){
-                binding.colorSelectorLinearLayout.setVisibility(View.GONE);
-                binding.colorLayoutArrow.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+    void CheckUserPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{
+                                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                                REQUEST_CODE_ASK_PERMISSIONS);
+                return;
             }
-        });
+        }
+        selectFolder();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_ASK_PERMISSIONS) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //User Granted Permission
+                selectFolder();
+            } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
+                // User selected the Never Ask Again Option ---- After denying permission one time
+                Toast.makeText(getContext(),getString(R.string.toast_dont_ask_permissiion), Toast.LENGTH_SHORT).show();
 
-        setColor();
-        return binding.getRoot();
-
+            } else {
+                //User Denied Permission
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(requireContext());
+                    alertBuilder.setCancelable(true);
+                    alertBuilder.setTitle(R.string.alert_dialog_title);
+                    alertBuilder.setMessage(R.string.alert_dialog_message);
+                    alertBuilder.setPositiveButton(R.string.ok, (dialog, which) -> {
+                        //Clicked OK in alert dialog ---- And requested permission again
+                        requestPermissions(new String[]{
+                                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                                REQUEST_CODE_ASK_PERMISSIONS);
+                    });
+                    AlertDialog alert = alertBuilder.create();
+                    alert.show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override
@@ -189,6 +243,8 @@ public class SettingFragment extends Fragment {
                         ,binding.seekBarGreen.getProgress(),binding.seekBarBlue.getProgress())));
     }
 
+
+    @SuppressLint("InlinedApi")
     public void statusBarColor(){
         Window window = requireActivity().getWindow();
         // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -205,7 +261,8 @@ public class SettingFragment extends Fragment {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
+    @SuppressLint("InlinedApi")
     public void initStatusBarColor(){
 
         int statusBarRed=colorSharedPreference.getInt(Constant.STATUS_BAR_COLOR_RED,0);
