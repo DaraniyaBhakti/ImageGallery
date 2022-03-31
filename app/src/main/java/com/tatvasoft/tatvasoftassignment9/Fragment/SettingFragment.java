@@ -19,6 +19,9 @@ import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +36,6 @@ import com.tatvasoft.tatvasoftassignment9.databinding.FragmentSettingBinding;
 import java.util.Objects;
 
 public class SettingFragment extends Fragment {
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     SharedPreferences colorSharedPreference;
     SharedPreferences.Editor colorEditor;
@@ -77,13 +79,40 @@ public class SettingFragment extends Fragment {
         return binding.getRoot();
 
     }
+    private final ActivityResultLauncher<String> permissionResult = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean result) {
+                    if (result) {
+                        selectFolder();
+                    } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        // User selected the Never Ask Again Option ---- After denying permission one time
+                        Toast.makeText(getContext(),getString(R.string.toast_dont_ask_permissiion), Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        //User Denied Permission
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(requireContext());
+                        alertBuilder.setCancelable(true);
+                        alertBuilder.setTitle(R.string.alert_dialog_title);
+                        alertBuilder.setMessage(R.string.alert_dialog_message);
+                        alertBuilder.setCancelable(false);
+                        alertBuilder.setPositiveButton(R.string.ok, (dialog, which) -> {
+                            //Clicked OK in alert dialog ---- And requested permission again
+                            permissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                        });
+                        AlertDialog alert = alertBuilder.create();
+                        alert.show();
+                    }
+                }
+            }
+    );
 
     public void selectFolder()
     {
         arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice
                 , fileListArray);
         binding.imageFileListView.setAdapter(arrayAdapter);
-
+        binding.imageFileListLinearLayout.setVisibility(View.VISIBLE);
         binding.selectFolderLinearLayout.setOnClickListener(v -> {
             if(binding.imageFileListLinearLayout.getVisibility() == View.GONE){
                 binding.imageFileListLinearLayout.setVisibility(View.VISIBLE);
@@ -99,42 +128,11 @@ public class SettingFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{
-                                        Manifest.permission.READ_EXTERNAL_STORAGE},
-                                REQUEST_CODE_ASK_PERMISSIONS);
+                        permissionResult.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
                 return;
             }
         }
         selectFolder();
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE_ASK_PERMISSIONS) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //User Granted Permission
-                selectFolder();
-            } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
-                // User selected the Never Ask Again Option ---- After denying permission one time
-                Toast.makeText(getContext(),getString(R.string.toast_dont_ask_permissiion), Toast.LENGTH_SHORT).show();
-
-            } else {
-                //User Denied Permission
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(requireContext());
-                    alertBuilder.setCancelable(true);
-                    alertBuilder.setTitle(R.string.alert_dialog_title);
-                    alertBuilder.setMessage(R.string.alert_dialog_message);
-                    alertBuilder.setPositiveButton(R.string.ok, (dialog, which) -> {
-                        //Clicked OK in alert dialog ---- And requested permission again
-                        requestPermissions(new String[]{
-                                        Manifest.permission.READ_EXTERNAL_STORAGE},
-                                REQUEST_CODE_ASK_PERMISSIONS);
-                    });
-                    AlertDialog alert = alertBuilder.create();
-                    alert.show();
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 
     @Override

@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.tatvasoft.tatvasoftassignment9.AsyncTask.ImageAsyncTask;
+import com.tatvasoft.tatvasoftassignment9.AsyncTask.ImageBackgroundTasks;
 import com.tatvasoft.tatvasoftassignment9.R;
 import com.tatvasoft.tatvasoftassignment9.Utils.Constant;
 import com.tatvasoft.tatvasoftassignment9.databinding.FragmentImageBinding;
@@ -68,8 +68,8 @@ public class ImageFragment extends Fragment{
         imagePathList.clear();
         File file = new File(Environment.getExternalStorageDirectory(),"/" + folderName + "/");
         if(!folderName.isEmpty()) {
-            ImageAsyncTask imageAsyncTask = new ImageAsyncTask(getContext());
-            imageAsyncTask.execute(file);
+            ImageBackgroundTasks imageBackgroundTasks = new ImageBackgroundTasks(getContext());
+            imageBackgroundTasks.execute(file);
         }
         else {
             binding.noImageTextView.setText(R.string.no_folder_selected_text_view);
@@ -95,5 +95,7 @@ public class ImageFragment extends Fragment{
                 .replace(R.id.container,new SettingFragment()).addToBackStack(null).commit();
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
